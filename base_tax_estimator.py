@@ -31,7 +31,7 @@ class TaxEstimator:
     
     def __bucket(self, low, high, value):
         if (low > high):
-            raise exceptions.EstimatorError("Was not possible to find the bucket for value " + value)
+            raise exceptions.EstimatorError("Was not possible to find the bucket for value " + str(value))
         if (value >= self.__limits[high]):
             return high
         mid = int((low + high) / 2)
@@ -48,5 +48,7 @@ class TaxEstimator:
 
 
     def tax(self, value):
+        if value < 0:
+            raise exceptions.EstimatorError("Ca't calculate tax for negative value: " + str(value))
         bucket = self.bucket(value)
         return float(self.__functions[bucket][0]*(value-self.__limits[bucket]) + self.__functions[bucket][1])

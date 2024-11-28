@@ -31,24 +31,22 @@ class CanadaTaxEstimator:
     def getProvinces(self) -> list[str]:
         return list(self.__province_repositoy.keys())
     
-    def tax(self, province, value, capital_gain_percentage = 0.0):
-        if not 0.0<=capital_gain_percentage<=1.0:
+    def tax(self, province, value, cg_pc = 0.0):
+        if not 0.0<=cg_pc<=1.0:
             raise exceptions.EstimatorError("Capital gain percentage should be between 0 and 1")
         province_estimator:ProvinceTaxEstimator = self.__province_repositoy.get(province)
         if province_estimator is None:
             raise exceptions.EstimatorError("There's no provincial estimator for " + province)
         
-        if capital_gain_percentage == 0:
-            return self.__federal_estimator.tax(value) + province_estimator.tax(value)
+        cg_threshold = 250000
         
-        new_value = (1-capital_gain_percentage)*value + min(capital_gain_percentage*value, 250000)*0.5 + max(capital_gain_percentage*value-250000, 0)*2/3
-        return self.__federal_estimator.tax(new_value) + province_estimator.tax(new_value)
-        
+        adj_value = (1-cg_pc)*value + min(cg_pc*value, cg_threshold)/2 + max(cg_pc*value-cg_threshold, 0)*2/3
 
-    
-    def tax_rate(self, province, value, capital_gain_percentage = 0.0):
+        return self.__federal_estimator.tax(adj_value) + province_estimator.tax(adj_value)
+        
+    def average_tax_rate(self, province, value, cg_pc = 0.0):
         if value == 0:
             return 0
-        return self.tax(province, value, capital_gain_percentage=capital_gain_percentage)/value
+        return self.tax(province, value, cg_pc=cg_pc)/value
         
 
