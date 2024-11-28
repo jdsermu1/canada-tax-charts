@@ -41,9 +41,3 @@ class CanadaTaxEstimator:
         if value == 0:
             return 0
         return self.tax(province, value)/value
-    
-    def tax_func(self, province):
-        return lambda value: self.tax(province, value)
-    
-    def tax_rate_func(self, province):
-        return lambda value: self.tax_rate(province, value)
