@@ -34,6 +34,17 @@ class TestBaseTaxEstimator(unittest.TestCase):
         self.assertEqual(baseEstimator.tax(25), 4.5)
         self.assertEqual(baseEstimator.tax(30), 6)
         self.assertEqual(baseEstimator.tax(35), 8)
+
+    def test_average_tax_rate(self):
+        baseEstimator = base_tax_estimator.TaxEstimator(np.array([0, 10, 20, 30]), np.array([.1, .2, .3, .4]))
+        self.assertEqual(baseEstimator.average_tax_rate(0), 0)
+        self.assertEqual(baseEstimator.average_tax_rate(5), .1)
+        self.assertEqual(baseEstimator.average_tax_rate(10), .1)
+        self.assertEqual(baseEstimator.average_tax_rate(15), 2/15)
+        self.assertEqual(baseEstimator.average_tax_rate(20), 3/20)
+        self.assertEqual(baseEstimator.average_tax_rate(25), 4.5/25)
+        self.assertEqual(baseEstimator.average_tax_rate(30), .2)
+        self.assertEqual(baseEstimator.average_tax_rate(35), 8/35)
     
 
 

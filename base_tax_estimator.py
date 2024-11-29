@@ -52,3 +52,8 @@ class TaxEstimator:
             raise exceptions.EstimatorError("Ca't calculate tax for negative value: " + str(value))
         bucket = self.bucket(value)
         return float(self.__functions[bucket][0]*(value-self.__limits[bucket]) + self.__functions[bucket][1])
+    
+    def average_tax_rate(self, value):
+        if value == 0:
+            return 0
+        return self.tax(value)/value
