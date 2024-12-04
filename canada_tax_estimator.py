@@ -2,6 +2,21 @@ import base_tax_estimator
 import exceptions
 
 
+class DividendTaxCreditor:
+    def __init__(self, elegible_tax_credit_rate, non_elegible_tax_credit):
+        self.__eligible_tax_credit_rate = elegible_tax_credit_rate
+        self.___non_elegible_tax_creidt_rate = non_elegible_tax_credit
+
+    def validate(self):
+        if not 0 <= self.__tax_credit_rate <= 1:
+            raise exceptions.EstimatorError("Tax credit rate should be between 0 and 1")
+
+    def tax_credit(self, value, elegible=False):
+        return (
+            self.__eligible_tax_credit_rate if elegible else self.___non_elegible_tax_creidt_rate
+        ) * value
+
+
 class ProvinceTaxEstimator:
     def __init__(self, province: str, limits, rates):
         self.__province = province
