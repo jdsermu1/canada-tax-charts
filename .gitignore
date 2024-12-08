@@ -1,3 +1,6 @@
+# Data commenting data for now can download from https://open.canada.ca/data/dataset/37e77255-75e7-4db2-a95c-6be5f7f4f91a/resource/70afc5c9-1ea6-4a94-9d4c-d6b8415e1298
+data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
